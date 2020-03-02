@@ -12,6 +12,7 @@ contributors:
   - byzyk
   - wizardofhogwarts
   - EslamHiko
+  - smelukov
 related:
   - title: Analyzing Build Statistics
     url: https://survivejs.com/webpack/optimizing-build/analyzing-build-statistics/
@@ -25,12 +26,12 @@ related:
     url: https://medium.com/@nimgrg/analysing-and-minimising-the-size-of-client-side-bundle-with-webpack-and-source-map-explorer-41096559beca#.c3t2srr8x
 ---
 
-For proper usage and easy distribution of this configuration, webpack can be configured with `webpack.config.js`. Any parameters sent to the CLI will map to a corresponding parameter in the config file.
+For proper usage and easy distribution of this configuration, webpack can be configured with `webpack.config.js`. Any parameters sent to the CLI will map to a corresponding parameter in the configuration file.
 
 Read the [installation guide](/guides/installation) if you don't already have webpack and CLI installed.
 
 
-## Usage with config file
+## Usage with configuration file
 
 ```bash
 webpack [--config webpack.config.js]
@@ -39,7 +40,7 @@ webpack [--config webpack.config.js]
 See [configuration](/configuration) for the options in the configuration file.
 
 
-## Usage without config file
+## Usage without configuration file
 
 ```sh
 webpack <entry> [<entry>] -o <output>
@@ -108,7 +109,7 @@ webpack --help
 webpack -h
 ```
 
-__Build source using a config file__
+__Build source using a configuration file__
 
 Specifies a different [configuration](/configuration) file to pick up. Use this if you want to specify something different from `webpack.config.js`, which is the default.
 
@@ -148,15 +149,15 @@ Invocation                               | Resulting environment
 
 T> See the [environment variables](/guides/environment-variables/) guide for more information on its usage.
 
-### Config Options
+### Configuration Options
 
 Parameter                 | Explanation                                 | Input type | Default
 ------------------------- | ------------------------------------------- | ---------- | ------------------
-`--config`                | Path to the config file                     | string     | webpack.config.js or webpackfile.js
-`--config-register, -r`   | Preload one or more modules before loading the webpack configuration | array |
-`--config-name`           | Name of the config to use                   | string     |
-`--env`                   | Environment passed to the config, when it is a function  | |
-`--mode`                  | Mode to use, either "development" or "production" | string |
+`--config`                | Path to the configuration file                                       | string | webpack.config.js or webpackfile.js
+`--config-register, -r`   | Preload one or more modules before loading the webpack configuration | array  |
+`--config-name`           | Name of the configuration to use                                     | string |
+`--env`                   | Environment passed to the configuration, when it is a function       |        |
+`--mode`                  | Mode to use                                                          | string | `'production'`
 
 ### Output Options
 
@@ -365,4 +366,20 @@ webpack --progress --profile
 1ms asset optimization
 6ms emitting
 ⋮
+```
+
+## Pass CLI arguments to Node.js
+
+To pass arguments directly to Node.js process, you can use the `--node-args` option. All other flags and options will be received by the webpack-cli.
+
+For example, to increase the memory limit of Node.js process to 4 GB
+
+```bash
+webpack --node-args="--max-old-space-size=4096"
+```
+
+Also, you can pass multiple options to Node.js process
+
+```bash
+webpack --node-args="--max-old-space-size=4096" --node-args="-r /path/to/preload/file.js"
 ```
